@@ -1,0 +1,10 @@
+[package]
+name = "backend"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rocket = { version = "0.5", features = ["json"] }
+sqlx = { version = "0.6", features = ["mysql", "runtime-tokio-native-tls"] }
+tokio = { version = "1", features = ["full"] }
+dotenv = "0.15"
