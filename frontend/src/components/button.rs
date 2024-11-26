@@ -3,22 +3,18 @@ use yew::prelude::*;
 use yew_router::prelude::*;
 
 #[derive(Properties, PartialEq)]
-pub struct RedirectButtonProps<T: Routable + Clone> {
-    pub route: T,
-    #[prop_or_default]
-    pub class: Classes,
+pub struct ButtonProps {
     #[prop_or_default]
     pub children: Children,
+    #[prop_or_default]
+    pub onclick: Option<Callback<MouseEvent>>,
+    #[prop_or_default]
+    pub class: Classes,
 }
 
-#[function_component(RedirectButton)]
-pub fn redirect_button<T: Routable + Clone + 'static>(props: &RedirectButtonProps<T>) -> Html {
-    let navigator = use_navigator().unwrap();
-
-    let onclick = {
-        let route = props.route.clone();
-        Callback::from(move |_| navigator.push(&route))
-    };
+#[function_component(Button)]
+pub fn button(props: &ButtonProps) -> Html {
+    let onclick = props.onclick.clone().unwrap_or_else(|| Callback::from(|_| {}));
 
     let style = Style::new(css!(
         r#"
@@ -31,7 +27,7 @@ pub fn redirect_button<T: Routable + Clone + 'static>(props: &RedirectButtonProp
             display: inline-block;
             font-weight: 700;
             outline: none;
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 1rem 0.2rem 1rem;
             text-align: center;
             touch-action: manipulation;
             transform: translateZ(0);
@@ -81,6 +77,31 @@ pub fn redirect_button<T: Routable + Clone + 'static>(props: &RedirectButtonProp
     .expect("Failed to create style.");
 
     html! {
-        <button class={classes!(style, props.class.clone())} {onclick}>{ for props.children.iter() }</button>
+        <button class={classes!(style, props.class.clone())} {onclick}>
+            { for props.children.iter() }
+        </button>
+    }
+}
+
+#[derive(Properties, PartialEq)]
+pub struct RedirectButtonProps<T: Routable + Clone> {
+    pub route: T,
+    #[prop_or_default]
+    pub class: Classes,
+    #[prop_or_default]
+    pub children: Children,
+}
+
+#[function_component(RedirectButton)]
+pub fn redirect_button<T: Routable + Clone + 'static>(props: &RedirectButtonProps<T>) -> Html {
+    let navigator = use_navigator().unwrap();
+
+    let onclick = {
+        let route = props.route.clone();
+        Callback::from(move |_| navigator.push(&route))
+    };
+
+    html! {
+        <Button class={props.class.clone()} {onclick}>{ for props.children.iter() }</Button>
     }
 }

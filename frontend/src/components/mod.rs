@@ -1,14 +1,14 @@
 pub mod button;
 pub mod prelude {
     pub use super::button::RedirectButton;
+    pub use super::button::Button;
     pub use super::Background;
     pub use super::Header;
     pub use super::Logo;
     pub use super::Title;
+    pub use super::MaterialIcon;
 }
 
-use crate::pages::Root;
-use button::RedirectButton;
 use stylist::{css, Style};
 use yew::prelude::*;
 
@@ -39,9 +39,9 @@ pub fn background() -> Html {
 #[derive(Properties, PartialEq)]
 pub struct LogoProps {
     #[prop_or("150px".into())]
-    width: String,
+    pub width: String,
     #[prop_or("150px".into())]
-    height: String,
+    pub height: String,
 }
 
 #[function_component(Logo)]
@@ -87,13 +87,16 @@ pub fn title(props: &TitleProps) -> Html {
     }
 }
 
+#[derive(Properties, PartialEq)]
+pub struct HeaderProps {
+    #[prop_or_default]
+    pub children: Children,
+}
+
 #[function_component(Header)]
-pub fn header() -> Html {
+pub fn header(props: &HeaderProps) -> Html {
     let style = Style::new(css!(
         r#"
-            position: fixed;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 60px;
             display: flex;
@@ -103,22 +106,25 @@ pub fn header() -> Html {
             color: white;
             padding: 0 1rem;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
             justify-content: flex-start;
-        "#
-    )).expect("Failed to create style.");
-
-    let button_style = Style::new(css!(
-        r#"
-            margin-left: auto;
         "#
     )).expect("Failed to create style.");
 
     html! {
         <header class={style}>
-            <Logo width={"50px"} height={"50px"}/>
-            <Title font_size="1.2em">{"Clinic Management System"}</Title>
-            <RedirectButton<Root> route={ Root::Home } class={button_style}> {"Back"} </RedirectButton<Root>>
+            { for props.children.iter() }
         </header>
+    }
+}
+
+#[derive(Properties, PartialEq)]
+pub struct MaterialIconProps {
+    pub code: String,
+}
+
+#[function_component(MaterialIcon)]
+pub fn material_icon(props: &MaterialIconProps) -> Html {
+    html! {
+        <span class="material-symbols-outlined">{props.code.clone()}</span>
     }
 }
