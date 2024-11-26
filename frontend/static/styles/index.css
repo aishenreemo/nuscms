@@ -1,0 +1,27 @@
+:root {
+    --color-bg: #131718;
+    --color-fg: #EEEEEE;
+    --color-red: #df5b61;
+    --color-green: #87c7a1;
+    --color-orange: #de8f78;
+    --color-blue: #35408e;
+    --color-blue-dark: #292c45;
+    --color-violet: #bc83e3;
+    --color-cyan: #70b9cc;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Funnel Display";
+    font-size: 18px;
+    scroll-behavior: smooth;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    line-height: 1.5em;
+    letter-spacing: 0.05rem;
+}

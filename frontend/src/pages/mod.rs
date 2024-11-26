@@ -1,5 +1,5 @@
-pub mod home;
 pub mod dashboard;
+pub mod home;
 pub mod not_found;
 
 use yew::prelude::*;
@@ -18,7 +18,7 @@ pub enum Root {
 
 pub fn switch(routes: Root) -> Html {
     match routes {
-        Root::Home => html! { 
+        Root::Home => html! {
             <home::Home />
         },
         Root::Dashboard => html! {
