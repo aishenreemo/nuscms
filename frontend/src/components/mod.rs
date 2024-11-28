@@ -13,5 +13,7 @@ pub mod prelude {
     pub use super::header::Header;
     pub use super::icon::MaterialIcon;
     pub use super::logo::Logo;
+    pub use super::logo::LogoFull;
     pub use super::title::Title;
+    pub use super::footer::Footer;
 }

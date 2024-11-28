@@ -34,6 +34,7 @@ pub fn dashboard() -> Html {
                 <DashboardContainer title={"Appointments"} grid_column={(1, 3)}/>
                 <DashboardContainer title={"Inventory"} grid_column={(3, 5)}/>
             </section>
+            <Footer />
         </main>
     }
 }
@@ -73,27 +74,23 @@ pub fn dashboard_container(props: &DashboardContainerProps) -> Html {
             min-height: 350px;
             max-height: 600px;
             grid-column: ${start} / ${end};
+            & > header > button {
+                margin-left: auto;
+            }
         "#,
         start = props.grid_column.0,
         end = props.grid_column.1,
     ))
     .expect("Failed to create style.");
 
-    let right_style = Style::new(css!(
-        r#"
-            margin-left: auto;
-        "#
-    ))
-    .expect("Failed to create style.");
-
     html! {
         <div class={container_style.clone()}>
             <Header>
-                <Title font_size="1rem">{"Faculty"}</Title>
-                <Button class={right_style.clone()}>
-                    <MaterialIcon code={"add"}/>
-                </Button>
+                <Title font_size="1rem">{props.title.clone()}</Title>
+                <Button><MaterialIcon code={"add"}/></Button>
             </Header>
+            <div>
+            </div>
         </div>
     }
 }
