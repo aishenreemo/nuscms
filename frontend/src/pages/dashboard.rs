@@ -72,10 +72,15 @@ pub fn dashboard_container(props: &DashboardContainerProps) -> Html {
             flex-direction: column;
             gap: 0.25rem;
             min-height: 350px;
-            max-height: 600px;
+            max-height: 400px;
             grid-column: ${start} / ${end};
             & > header > button {
                 margin-left: auto;
+            }
+
+            & > div {
+                padding: 1rem;
+                overflow: scroll;
             }
         "#,
         start = props.grid_column.0,
@@ -83,13 +88,26 @@ pub fn dashboard_container(props: &DashboardContainerProps) -> Html {
     ))
     .expect("Failed to create style.");
 
+    let items = use_state(|| Vec::new());
+    let items_clone = items.clone();
+    let add_item: Callback<MouseEvent> = Callback::from(move |_| {
+        let mut new_items = (*items_clone).clone();
+        new_items.push(format!("Item {}", new_items.len() + 1));
+        items_clone.set(new_items);
+    });
+
     html! {
         <div class={container_style.clone()}>
             <Header>
                 <Title font_size="1rem">{props.title.clone()}</Title>
-                <Button><MaterialIcon code={"add"}/></Button>
+                <Button onclick={add_item}><MaterialIcon code={"add"}/></Button>
             </Header>
             <div>
+                {
+                    (*items).iter().map(|item| {
+                        html! { <p>{ item }</p> }
+                    }).collect::<Html>()
+                }
             </div>
         </div>
     }

@@ -12,7 +12,7 @@ pub fn header(props: &HeaderProps) -> Html {
     let style = Style::new(css!(
         r#"
             width: 100%;
-            height: 60px;
+            min-height: 60px;
             display: flex;
             align-items: center;
             gap: 1rem;
