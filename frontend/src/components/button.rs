@@ -14,7 +14,10 @@ pub struct ButtonProps {
 
 #[function_component(Button)]
 pub fn button(props: &ButtonProps) -> Html {
-    let onclick = props.onclick.clone().unwrap_or_else(|| Callback::from(|_| {}));
+    let onclick = props
+        .onclick
+        .clone()
+        .unwrap_or_else(|| Callback::from(|_| {}));
 
     let style = Style::new(css!(
         r#"
