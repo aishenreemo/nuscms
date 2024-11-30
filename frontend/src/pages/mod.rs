@@ -1,6 +1,5 @@
 pub mod dashboard;
 pub mod home;
-pub mod not_found;
 
 use yew::prelude::*;
 use yew_router::prelude::*;
@@ -25,7 +24,16 @@ pub fn switch(routes: Root) -> Html {
             <dashboard::Dashboard />
         },
         Root::NotFound => html! {
-            <not_found::NotFound />
+            <NotFound />
         },
+    }
+}
+
+#[function_component(NotFound)]
+pub fn not_found() -> Html {
+    html! {
+        <>
+            <h1>{ "404 Not Found" }</h1>
+        </>
     }
 }

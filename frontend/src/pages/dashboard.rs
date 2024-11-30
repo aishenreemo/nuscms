@@ -11,16 +11,12 @@ pub fn dashboard() -> Html {
             display: flex;
             flex-direction: column;
             width: 100%;
-        "#
-    ))
-    .expect("Failed to create style.");
-
-    let section_style = Style::new(css!(
-        r#"
-            margin: 1rem;
-            display: grid;
-            gap: 1rem;
-            grid-template-columns: repeat(4, 1fr);
+            & > section {
+                margin: 1rem;
+                display: grid;
+                gap: 1rem;
+                grid-template-columns: repeat(4, 1fr);
+            }
         "#
     ))
     .expect("Failed to create style.");
@@ -28,7 +24,7 @@ pub fn dashboard() -> Html {
     html! {
         <main class={main_style}>
             <DashboardHeader />
-            <section class={section_style}>
+            <section>
                 <DashboardContainer title={"Students"} grid_column={(1, 4)}/>
                 <DashboardContainer title={"Faculty"} grid_column={(4, 5)}/>
                 <DashboardContainer title={"Appointments"} grid_column={(1, 3)}/>
@@ -104,9 +100,9 @@ pub fn dashboard_container(props: &DashboardContainerProps) -> Html {
             </Header>
             <div>
                 {
-                    (*items).iter().map(|item| {
-                        html! { <p>{ item }</p> }
-                    }).collect::<Html>()
+                    for items.iter().map(|item| {
+                        html! { <p>{item}</p> } 
+                    })
                 }
             </div>
         </div>
